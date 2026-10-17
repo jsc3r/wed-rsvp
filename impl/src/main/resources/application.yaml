@@ -1,0 +1,37 @@
+quarkus:
+  container-image:
+    builder: jib
+    name: localhost/wed-rsvp
+    tag: latest
+
+  jib:
+    base-jvm-image: eclipse-temurin:21-jre
+    docker-executable-name: podman
+    jvm-additional-arguments:
+      - -Dquarkus.http.host=0.0.0.0
+
+  datasource:
+    db-kind: h2
+    username: sa
+    password: sa
+    jdbc:
+      url: "jdbc:h2:file:${DB_PATH:./.data/wed-rsvp};DB_CLOSE_DELAY=-1"
+
+  hibernate-orm:
+    schema-management:
+      strategy: update
+    mapping:
+      format:
+        global: ignore
+
+  swagger-ui:
+    always-include: true
+
+"%test":
+  quarkus:
+    datasource:
+      jdbc:
+        url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+    hibernate-orm:
+      schema-management:
+        strategy: drop-and-create
