@@ -34,7 +34,7 @@ public class InvitationMapper {
         guestDetails.firstName = guest.firstName;
         guestDetails.lastName = guest.lastName;
         guestDetails.accepted = guest.accepted;
-        guestDetails.dietaryPreferences = new de.jsc3r.wedrsvp.api.invitation.dto.response.DietaryPreferences(
+        guestDetails.dietaryPreferences = new de.jsc3r.wedrsvp.api.invitation.dto.DietaryPreferences(
                 guest.dietaryPreferences.noGluten,
                 guest.dietaryPreferences.noLactose,
                 guest.dietaryPreferences.noEggs,

@@ -31,6 +31,18 @@
         <plugins>
             <plugin>
                 <groupId>io.smallrye</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-index</id>
+                        <goals>
+                            <goal>jandex</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.smallrye</groupId>
                 <artifactId>smallrye-open-api-maven-plugin</artifactId>
                 <version>4.3.4</version>
                 <executions>
@@ -42,12 +54,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <scanPackages>de.jsc3r.wedrsvp.api.invitation</scanPackages>
                     <outputDirectory>${project.build.directory}/generated</outputDirectory>
                     <schemaFilename>invitation-api</schemaFilename>
                     <outputFileTypeFilter>YAML</outputFileTypeFilter>
-                    <infoTitle>Wedding RSVP API</infoTitle>
-                    <infoVersion>1.0.0</infoVersion>
-                    <infoDescription>Example API for wedding RSVP messages</infoDescription>
                 </configuration>
             </plugin>
         </plugins>

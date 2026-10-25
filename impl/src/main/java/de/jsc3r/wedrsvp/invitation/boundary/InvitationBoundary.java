@@ -8,10 +8,8 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 
-@Path("api/invitation/{invitation-code}")
 public class InvitationBoundary implements Invitation {
 
     @Inject
