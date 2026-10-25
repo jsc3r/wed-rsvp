@@ -4,8 +4,11 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
+# IntelliJ IDEA
+.idea/
+*.iml
+.run/
+.aws/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -22,3 +25,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Custom agentic setup
+.agents/
+.codex/
+
+# Maven and local application data
+target/
+.data/
