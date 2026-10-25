@@ -16,10 +16,7 @@ public class InvitationExceptionHandler implements ExceptionMapper<InvitationExc
 
     @Override
     public Response toResponse(InvitationException exception) {
-        LOG.warn(
-                "Invitation request failed for code '%s': %s"
-                        .formatted(exception.invitationCode(), exception.getMessage()),
-                exception);
+        LOG.debugf("Invitation request failed with status %s", exception.status());
         return Response.status(exception.status()).build();
     }
 }

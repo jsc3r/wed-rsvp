@@ -37,6 +37,20 @@
             <artifactId>quarkus-rest-jsonb</artifactId>
         </dependency>
 
+        <!-- Authentication and password hashing -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-jwt-build</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-elytron-security-common</artifactId>
+        </dependency>
+
         <!-- Database -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -66,6 +80,11 @@
         <!-- Testing -->
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jacoco</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit</artifactId>
             <scope>test</scope>
         </dependency>
@@ -88,6 +107,16 @@
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <quarkus.jacoco.data-file>${project.build.directory}/jacoco.exec</quarkus.jacoco.data-file>
+                        <quarkus.jacoco.reuse-data-file>true</quarkus.jacoco.reuse-data-file>
+                        <quarkus.jacoco.report>false</quarkus.jacoco.report>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
@@ -123,6 +152,10 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <exclClassLoaders>*QuarkusClassLoader</exclClassLoaders>
+                            <append>true</append>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>report</id>

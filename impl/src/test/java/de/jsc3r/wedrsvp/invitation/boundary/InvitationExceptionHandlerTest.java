@@ -26,22 +26,18 @@ class InvitationExceptionHandlerTest {
 
     @Test
     void mapsInvitationNotFoundToNotFound() {
-        when(exception.invitationCode()).thenReturn("unknown");
-        when(exception.getMessage()).thenReturn("not found");
         when(exception.status()).thenReturn(Response.Status.NOT_FOUND);
 
-        try (Response response = handler.toResponse(exception)) {
+        try (var response = handler.toResponse(exception)) {
             assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
         }
     }
 
     @Test
     void mapsAccessDeniedToForbidden() {
-        when(exception.invitationCode()).thenReturn("known");
-        when(exception.getMessage()).thenReturn("access denied");
         when(exception.status()).thenReturn(Response.Status.FORBIDDEN);
 
-        try (Response response = handler.toResponse(exception)) {
+        try (var response = handler.toResponse(exception)) {
             assertEquals(Response.Status.FORBIDDEN.getStatusCode(), response.getStatus());
         }
     }

@@ -15,6 +15,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
@@ -25,6 +29,11 @@
         <dependency>
             <groupId>org.eclipse.microprofile.openapi</groupId>
             <artifactId>microprofile-openapi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -54,7 +63,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scanPackages>de.jsc3r.wedrsvp.api.invitation</scanPackages>
+                    <scanPackages>de.jsc3r.wedrsvp.api</scanPackages>
                     <outputDirectory>${project.build.directory}/generated</outputDirectory>
                     <schemaFilename>invitation-api</schemaFilename>
                     <outputFileTypeFilter>YAML</outputFileTypeFilter>

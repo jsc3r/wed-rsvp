@@ -1,11 +1,15 @@
 package de.jsc3r.wedrsvp.invitation.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import de.jsc3r.wedrsvp.auth.entity.LoginAttempts;
+import de.jsc3r.wedrsvp.auth.entity.UserAccount;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.OneToOne;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +21,14 @@ public class Invitation extends PanacheEntity {
     @Column(nullable = false, unique = true)
     public String invitationCode;
 
-    @Column(nullable = false)
-    public String pin;
+    @Column(name = "pin", nullable = false)
+    public String pinHash;
+
+    @OneToOne
+    public UserAccount account;
+
+    @Embedded
+    public LoginAttempts loginAttempts = new LoginAttempts();
 
     @Column(nullable = false)
     public Language language;

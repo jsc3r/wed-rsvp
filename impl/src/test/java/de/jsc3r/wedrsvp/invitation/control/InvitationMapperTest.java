@@ -32,7 +32,7 @@ class InvitationMapperTest {
         when(guestRequest.dietaryPreferences()).thenReturn(dietaryPreferences);
         stubDietaryPreferences();
 
-        Guest guest = mapper.toGuest(guestRequest);
+        var guest = mapper.toGuest(guestRequest);
 
         assertAll(
                 () -> assertTrue(guest.accepted),
@@ -41,10 +41,10 @@ class InvitationMapperTest {
 
     @Test
     void mapsInvitationToDetails() {
-        Invitation invitation = new Invitation();
+        var invitation = new Invitation();
         invitation.language = Language.SPANISH;
 
-        Guest guest = new Guest();
+        var guest = new Guest();
         guest.firstName = "Bilbo";
         guest.lastName = "Baggins";
         guest.accepted = true;

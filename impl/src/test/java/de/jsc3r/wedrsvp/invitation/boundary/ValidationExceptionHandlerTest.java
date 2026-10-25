@@ -12,7 +12,7 @@ class ValidationExceptionHandlerTest {
     void mapsConstraintViolationsToBadRequest() {
         ConstraintViolationException exception = new ConstraintViolationException(java.util.Set.of());
 
-        try (Response response = new ValidationExceptionHandler().toResponse(exception)) {
+        try (var response = new ValidationExceptionHandler().toResponse(exception)) {
             assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
         }
     }
