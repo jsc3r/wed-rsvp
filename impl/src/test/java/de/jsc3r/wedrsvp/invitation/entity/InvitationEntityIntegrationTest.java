@@ -1,20 +1,17 @@
 package de.jsc3r.wedrsvp.invitation.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import de.jsc3r.wedrsvp.auth.entity.UserAccount;
+import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 @QuarkusTest
-class InvitationComponentTest {
+class InvitationEntityIntegrationTest {
 
     @BeforeEach
     @Transactional
@@ -25,36 +22,27 @@ class InvitationComponentTest {
     @Test
     @Transactional
     void findsInvitationByCode() {
-        Invitation invitation = new Invitation();
+        var account = new UserAccount();
+        account.roles.add("guest");
+        account.persistAndFlush();
+        var invitation = new Invitation();
+        invitation.account = account;
         invitation.invitationCode = "abc123";
-        invitation.pin = "123456";
+        invitation.pinHash = BcryptUtil.bcryptHash("0123", 12);
         invitation.language = Language.GERMAN;
         invitation.persistAndFlush();
 
-        Optional<Invitation> result = Invitation.findByInvitationCode("abc123");
+        var result = Invitation.findByInvitationCode("abc123");
 
         assertTrue(result.isPresent());
         assertEquals(invitation.id, result.get().id);
         assertEquals("abc123", result.get().invitationCode);
+        assertEquals(account.id, result.get().account.id);
     }
 
     @Test
     @Transactional
     void returnsEmptyForUnknownCode() {
         assertTrue(Invitation.findByInvitationCode("unknown").isEmpty());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void delegatesToPanacheFinder() {
-        PanacheQuery<Invitation> query = mock(PanacheQuery.class);
-        when(query.firstResultOptional()).thenReturn(Optional.empty());
-
-        try (var panache = mockStatic(PanacheEntityBase.class)) {
-            panache.when(() -> PanacheEntityBase.<Invitation>find("invitationCode", "unknown"))
-                    .thenReturn(query);
-
-            assertTrue(Invitation.findByInvitationCode("unknown").isEmpty());
-        }
     }
 }

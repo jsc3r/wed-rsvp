@@ -7,20 +7,18 @@ import de.jsc3r.wedrsvp.invitation.entity.Guest;
 import de.jsc3r.wedrsvp.invitation.entity.Invitation;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.List;
-
 @ApplicationScoped
 public class InvitationMapper {
 
     Guest toGuest(GuestAcceptanceRequest request) {
-        Guest guest = new Guest();
+        var guest = new Guest();
         guest.accepted = request.accepted();
         guest.dietaryPreferences = toDiet(request.dietaryPreferences());
         return guest;
     }
 
     InvitationDetails toInvitationDetails(Invitation invitation) {
-        List<de.jsc3r.wedrsvp.api.invitation.dto.response.Guest> guests = invitation.guests.stream()
+        var guests = invitation.guests.stream()
                 .map(this::toGuestDetails)
                 .toList();
         return new InvitationDetails(
@@ -29,8 +27,7 @@ public class InvitationMapper {
     }
 
     private de.jsc3r.wedrsvp.api.invitation.dto.response.Guest toGuestDetails(Guest guest) {
-        de.jsc3r.wedrsvp.api.invitation.dto.response.Guest guestDetails =
-                new de.jsc3r.wedrsvp.api.invitation.dto.response.Guest();
+        var guestDetails = new de.jsc3r.wedrsvp.api.invitation.dto.response.Guest();
         guestDetails.firstName = guest.firstName;
         guestDetails.lastName = guest.lastName;
         guestDetails.accepted = guest.accepted;
@@ -46,7 +43,7 @@ public class InvitationMapper {
     }
 
     private DietaryPreferences toDiet(de.jsc3r.wedrsvp.api.invitation.dto.DietaryPreferences preferences) {
-        DietaryPreferences dietaryPreferences = new DietaryPreferences();
+        var dietaryPreferences = new DietaryPreferences();
         dietaryPreferences.noGluten = preferences.noGluten();
         dietaryPreferences.noLactose = preferences.noLactose();
         dietaryPreferences.noEggs = preferences.noEggs();
